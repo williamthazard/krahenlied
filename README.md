@@ -9,7 +9,7 @@ your new line will determine the following:
 
 1) pitch (v/8) from crow outputs 1 & 3
 2) slew time between pitches from outputs 1 & 3
-3) envelopes from outputs 2 & 4
+3) envelope shapes from outputs 2 & 4
 4) sequences for 4 Just Friends synth voices
 5) playback speed and direction for w/tape
 6) creation, activation, and deactivation of loops on w/tape
