@@ -53,7 +53,6 @@
     ii.wtape.timestamp(1)
     ii.wtape.freq(0)
     ii.wtape.play(1)
-    x = 0
     coro_id = clock.run(notes_event)
               clock.run(other_event)
               clock.run(jfa_event)
