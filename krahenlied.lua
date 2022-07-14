@@ -29,7 +29,7 @@
     elseif ascii > 204 and ascii <= 255 then map = 5
     end
     return map
-  end 
+  end
   function jfscaling (j)
     local tempScalar = {}
     for i = 1, #j do
@@ -48,8 +48,11 @@
     set()
   end
   function init()
-    input[1].mode('clock')  
+    input[1].mode('clock')
+    bpm = clock.tempo  
     ii.jf.mode(1)
+    ii.jf.run_mode(1)
+    ii.jf.tick(bpm)
     ii.wtape.timestamp(1)
     ii.wtape.freq(0)
     ii.wtape.play(1)
@@ -59,6 +62,10 @@
               clock.run(jfb_event)
               clock.run(jfc_event)
               clock.run(jfd_event)
+              clock.run(jfe_event)
+              clock.run(jff_event)
+              clock.run(run_event)
+              clock.run(quantize_event)
               clock.run(with_event)
               clock.run(rev_event)
               clock.run(loop_starter)
@@ -109,8 +116,8 @@
         local jfa_time = s:step(12)()
         local freq = jfa_pitch/12
         local level = j:step(13)()
-        clock.sync(jfa_time/4)
-        ii.jf.play_note(freq, level)
+        clock.sync(jfa_time/8)
+        ii.jf.play_voice(1, freq, level)
     end
   end
   function jfb_event()
@@ -119,8 +126,8 @@
         local jfb_time = s:step(15)()
         local freq = jfb_pitch/12
         local level = j:step(16)()
-        clock.sync(jfb_time/4)
-        ii.jf.play_note(freq, level)
+        clock.sync(jfb_time/8)
+        ii.jf.play_voice(2, freq, level)
     end  
   end
   function jfc_event()
@@ -129,8 +136,8 @@
         local jfc_time = s:step(18)()
         local freq = jfc_pitch/12
         local level = j:step(19)()
-        clock.sync(jfc_time/4)
-        ii.jf.play_note(freq, level)
+        clock.sync(jfc_time/8)
+        ii.jf.play_voice(3, freq, level)
     end
   end
   function jfd_event()
@@ -139,59 +146,95 @@
         local jfd_time = s:step(21)()
         local freq = jfd_pitch/12
         local level = j:step(22)()
-        clock.sync(jfd_time/4)
-        ii.jf.play_note(freq, level)
+        clock.sync(jfd_time/8)
+        ii.jf.play_voice(4, freq, level)
+    end
+  end
+  function jfe_event()
+    while true do
+        local jfe_pitch = s:step(23)()
+        local jfe_time = s:step(24)()
+        local freq = jfe_pitch/12
+        local level = j:step(25)()
+        clock.sync(jfe_time/8)
+        ii.jf.play_voice(5, freq, level)
+    end
+  end
+  function jff_event()
+    while true do
+        local jff_pitch = s:step(26)()
+        local jff_time = s:step(27)()
+        local freq = jff_pitch/12
+        local level = j:step(28)()
+        clock.sync(jff_time/8)
+        ii.jf.play_voice(6, freq, level)
+    end
+  end
+  function run_event()
+    while true do
+        local runvolts = j:step(29)()
+        local runtime = s:step(30)()
+        clock.sync(runtime)
+        ii.jf.run(runvolts)
+    end
+  end
+  function quantize_event()
+    while true do
+        local quant = s:step(30)()
+        local quantsync = s:step(31)()
+        clock.sync(quantsync)
+        ii.jf.quantize(quant)
     end
   end
   function with_event()
     while true do
-        local with_time = s:step(23)()
-        local speed_num = s:step(24)()
-        local speed_denom = s:step(25)()
+        local with_time = s:step(31)()
+        local speed_num = s:step(32)()
+        local speed_denom = s:step(33)()
         clock.sync(with_time)
         ii.wtape.speed(speed_num, speed_denom)
     end
   end
   function rev_event()
     while true do
-        local rev_time = s:step(26)()
+        local rev_time = s:step(34)()
         clock.sync(rev_time)
         ii.wtape.reverse()
     end
   end
   function loop_starter()
     while true do
-        local loop_starter_time = s:step(27)()
+        local loop_starter_time = s:step(35)()
         clock.sync(loop_starter_time)
         ii.wtape.loop_start()
     end
   end
   function loop_ender()
     while true do
-        local loop_ender_time = s:step(28)()
+        local loop_ender_time = s:step(36)()
         clock.sync(loop_ender_time)
         ii.wtape.loop_end()
     end
   end
   function loop_activator()
     while true do
-        local loop_activator_time = s:step(29)()
+        local loop_activator_time = s:step(37)()
         clock.sync(loop_activator_time)
         ii.wtape.loop_active(1)
     end
   end
   function loop_deactivator()
     while true do
-        local loop_deactivator_time = s:step(30)()
+        local loop_deactivator_time = s:step(38)()
         clock.sync(loop_deactivator_time)
         ii.wtape.loop_active(0)
     end
   end
   function loop_scaler()
     while true do
-        local loop_scaler_time = s:step(31)()
-        local scale_num = s:step(32)()
-        local scale_denom = s:step(33)()
+        local loop_scaler_time = s:step(39)()
+        local scale_num = s:step(40)()
+        local scale_denom = s:step(41)()
         local scale = scale_num/scale_denom
         clock.sync(loop_scaler_time)
         ii.wtape.loop_scale(scale)
@@ -199,16 +242,16 @@
   end
   function loop_jumper()
     while true do
-        local loop_jumper_time = s:step(34)()
+        local loop_jumper_time = s:step(42)()
         clock.sync(loop_jumper_time)
         ii.wtape.loop_next()
     end
   end
   function tape_seeker()
     while true do
-        local seeker_time = s:step(35)()
-        local seek_time = s:step(36)()
-        local alternate_time = s:step(37)()
+        local seeker_time = s:step(43)()
+        local seek_time = s:step(44)()
+        local alternate_time = s:step(45)()
         local big_seek_time = seek_time*300
         local big_alternate_time = alternate_time*300
         local big_time = big_seek_time-big_alternate_time
