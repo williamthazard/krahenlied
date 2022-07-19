@@ -1,7 +1,7 @@
 # krahenlied
 a poetry sequencer for monome crow &amp; druid
 
-begin by giving your poem a title using the title function, like so
+begin by giving your poem a title using the title function (i.e., typing ```title``` followed by your title in quotes), like so
 
 ```title "Christabel"```
 
