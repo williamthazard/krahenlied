@@ -1,11 +1,17 @@
 # krahenlied
 a poetry sequencer for monome crow &amp; druid
 
-update the sequence in druid by typing ```text``` followed by a new line of poetry in quotes — e.g.,
+begin by giving your poem a title using the title function, like so
+
+```title "Christabel"```
+
+this will start the clocks running and create an initial sequence
+
+continue by updating the sequence in druid by typing ```text``` followed by a new line of poetry in quotes — e.g.,
 
 ```text "'Tis the middle of night by the castle clock,"```
 
-your new line will determine the following:
+each new line will determine the following:
 
 1) pitch (v/8) from crow outputs 1 & 3
 2) slew time between pitches from outputs 1 & 3
