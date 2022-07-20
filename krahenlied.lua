@@ -47,7 +47,6 @@
     text_string = str
     set()
     ii.wtape.play(1)
-    ii.wtape.freq(0)
     coro_id = clock.run(notes_event)
               clock.run(other_event)
               clock.run(jfa_event)
@@ -60,10 +59,7 @@
               clock.run(quantize_event)
               clock.run(with_event)
               clock.run(rev_event)
-              clock.run(loop_starter)
-              clock.run(loop_ender)
-              clock.run(loop_activator)
-              clock.run(loop_deactivator)
+              clock.run(looper)
               clock.run(loop_scaler)
               clock.run(loop_jumper)
               clock.run(tape_seeker)
@@ -79,6 +75,7 @@
     ii.jf.run_mode(1)
     ii.jf.tick(bpm)
     ii.wtape.timestamp(1)
+    ii.wtape.freq(0)
   end
   function notes_event()
     while true do
@@ -167,66 +164,54 @@
   function run_event()
     while true do
         local runvolts = j:step(37)()
-        local runtime = s:step(38)()
+        local runtime = s:step(38)()/s:step(39)()
         clock.sync(runtime)
         ii.jf.run(runvolts)
     end
   end
   function quantize_event()
     while true do
-        local quant = s:step(39)()
-        local quantsync = s:step(40)()
+        local quant = s:step(40)()
+        local quantsync = s:step(41)()/s:step(42)()
         clock.sync(quantsync)
         ii.jf.quantize(quant)
     end
   end
   function with_event()
     while true do
-        local with_time = s:step(41)()/s:step(42)()
-        local speed_num = s:step(43)()
-        local speed_denom = s:step(44)()
+        local with_time = s:step(43)()/s:step(44)()
+        local speed_num = s:step(45)()
+        local speed_denom = s:step(46)()
         clock.sync(with_time)
         ii.wtape.speed(speed_num, speed_denom)
     end
   end
   function rev_event()
     while true do
-        local rev_time = s:step(45)()/s:step(46)()
+        local rev_time = s:step(47)()/s:step(48)()
         clock.sync(rev_time)
         ii.wtape.reverse()
     end
   end
-  function loop_starter()
+  function looper()
     while true do
-        local loop_starter_time = s:step(47)()/s:step(48)()
-        clock.sync(loop_starter_time)
+        local loop_starter_time = s:step(49)()/s:step(50)()
+        local sleep_time = s:step(51)()
+        local activator_time = s:step(52)()
+        local deactivator_time = s:step(53)()
         ii.wtape.loop_start()
-    end
-  end
-  function loop_ender()
-    while true do
-        local loop_ender_time = s:step(49)()/s:step(50)()
-        clock.sync(loop_ender_time)
+        clock.sleep(sleep_time)
         ii.wtape.loop_end()
-    end
-  end
-  function loop_activator()
-    while true do
-        local loop_activator_time = s:step(51)()/s:step(52)()
-        clock.sync(loop_activator_time)
+        clock.sleep(activator_time)
         ii.wtape.loop_active(1)
-    end
-  end
-  function loop_deactivator()
-    while true do
-        local loop_deactivator_time = s:step(53)()/s:step(54)()
-        clock.sync(loop_deactivator_time)
+        clock.sleep(deactivator_time)
         ii.wtape.loop_active(0)
+        clock.sync(loop_starter_time)
     end
   end
   function loop_scaler()
     while true do
-        local loop_scaler_time = s:step(55)()
+        local loop_scaler_time = s:step(54)()/s:step(55)()
         local scale = s:step(56)()/s:step(57)()
         clock.sync(loop_scaler_time)
         ii.wtape.loop_scale(scale)
@@ -234,16 +219,16 @@
   end
   function loop_jumper()
     while true do
-        local loop_jumper_time = s:step(58)()
+        local loop_jumper_time = s:step(58)()/s:step(59)()
         clock.sync(loop_jumper_time)
         ii.wtape.loop_next()
     end
   end
   function tape_seeker()
     while true do
-        local seeker_time = s:step(59)()/s:step(60)()
-        local seek_time = s:step(61)()*300
-        local alternate_time = s:step(62)()*300
+        local seeker_time = s:step(60)()/s:step(61)()
+        local seek_time = s:step(62)()*300
+        local alternate_time = s:step(63)()*300
         local big_time = seek_time-alternate_time
         clock.sync(seeker_time)
         ii.wtape.seek(big_time)
