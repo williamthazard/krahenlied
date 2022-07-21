@@ -60,9 +60,6 @@
               clock.run(with_event)
               clock.run(rev_event)
               clock.run(looper)
-              clock.run(loop_scaler)
-              clock.run(loop_jumper)
-              clock.run(tape_seeker)
   end
   function text(str)
     text_string = str
@@ -195,42 +192,47 @@
   end
   function looper()
     while true do
-        local loop_starter_time = s:step(49)()/s:step(50)()
-        local sleep_time = s:step(51)()
-        local activator_time = s:step(52)()
-        local deactivator_time = s:step(53)()
-        ii.wtape.loop_start()
-        clock.sleep(sleep_time)
-        ii.wtape.loop_end()
-        clock.sleep(activator_time)
-        ii.wtape.loop_active(1)
-        clock.sleep(deactivator_time)
-        ii.wtape.loop_active(0)
-        clock.sync(loop_starter_time)
-    end
-  end
-  function loop_scaler()
-    while true do
-        local loop_scaler_time = s:step(54)()/s:step(55)()
-        local scale = s:step(56)()/s:step(57)()
-        clock.sync(loop_scaler_time)
-        ii.wtape.loop_scale(scale)
-    end
-  end
-  function loop_jumper()
-    while true do
-        local loop_jumper_time = s:step(58)()/s:step(59)()
-        clock.sync(loop_jumper_time)
-        ii.wtape.loop_next()
-    end
-  end
-  function tape_seeker()
-    while true do
-        local seeker_time = s:step(60)()/s:step(61)()
-        local seek_time = s:step(62)()*300
-        local alternate_time = s:step(63)()*300
+        local looper_time = s:step(49)()/s:step(50)()
+        local sleep_time = s:step(51)()/s:step(52)()
+        local activator_time = s:step(53)()/s:step(54)()
+        local deactivator_time = s:step(55)()/s:step(56)()
+        local loop_scaler_time = s:step(57)()/s:step(58)()
+        local scale = s:step(59)()/s:step(60)()
+        local scale_times = s:step(61)()
+        local loop_jumper_time = s:step(62)()/s:step(63)()
+        local jump_times = s:step(64)()
+        local seeker_time = s:step(65)()/s:step(66)()
+        local seek_time = s:step(67)()*300
+        local alternate_time = s:step(68)()*300
         local big_time = seek_time-alternate_time
-        clock.sync(seeker_time)
-        ii.wtape.seek(big_time)
+        local seek_times = s:step(69)()
+        clock.sync(sleep_time)
+        ii.wtape.loop_start()
+        clock.sync(activator_time)
+        ii.wtape.loop_end()
+        clock.sync(deactivator_time)
+        ii.wtape.loop_active(1)
+        for i = 1,scale_times do 
+          clock.sync(loop_scaler_time)
+          ii.wtape.loop_scale(scale)
+          for i = 1,jump_times do
+            clock.sync(loop_jumper_time)
+            ii.wtape.loop_next()
+          end 
+        end
+        for i = 1,jump_times do
+          clock.sync(loop_jumper_time)
+          ii.wtape.loop_next()
+          for i = 1,scale_times do
+            clock.sync(loop_scaler_time)
+            ii.wtape.loop_scale(scale)
+          end
+        end
+        clock.sync(looper_time)
+        ii.wtape.loop_active(0)
+        for i = 1,seek_times do
+          clock.sync(seeker_time)
+          ii.wtape.seek(big_time)
+        end
     end
   end
