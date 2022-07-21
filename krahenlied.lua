@@ -1,17 +1,8 @@
 --- krahenLied.
   text_string = "aaaaaa"
   function remap(ascii)
-      local offset
-      if ascii <= 32 then offset = 0
-      elseif ascii > 32 and ascii <= 64 then offset = -32
-      elseif ascii > 64 and ascii <= 96 then offset = -64
-      elseif ascii > 96 and ascii <= 128 then offset = -96
-      elseif ascii > 128 and ascii <= 160 then offset = -128
-      elseif ascii > 160 and ascii <= 192 then offset = -160
-      elseif ascii > 192 and ascii <= 224 then offset = -192
-      elseif ascii > 224 and ascii <= 255 then offset = -224
-      end
-    return ascii + offset
+    ascii = ascii % 32 + 1
+    return ascii
   end
   function processString(s)
     local tempScalar = {}
@@ -21,14 +12,8 @@
     return tempScalar
   end
   function jfmap(ascii)
-    local map
-    if ascii <= 51 then map = 1
-    elseif ascii > 51 and ascii <= 102 then map  = 2
-    elseif ascii > 102 and ascii <= 153 then map = 3
-    elseif ascii > 153 and ascii <= 204 then map = 4
-    elseif ascii > 204 and ascii <= 255 then map = 5
-    end
-    return map
+    ascii = ascii % 5 + 1
+    return ascii
   end
   function jfscaling (j)
     local tempScalar = {}
@@ -198,9 +183,9 @@
         local deactivator_time = s:step(55)()/s:step(56)()
         local loop_scaler_time = s:step(57)()/s:step(58)()
         local scale = s:step(59)()/s:step(60)()
-        local scale_times = s:step(61)()
+        local scale_times = j:step(61)()
         local loop_jumper_time = s:step(62)()/s:step(63)()
-        local jump_times = s:step(64)()
+        local jump_times = j:step(64)()
         local seeker_time = s:step(65)()/s:step(66)()
         local seek_time = s:step(67)()*300
         local alternate_time = s:step(68)()*300
@@ -208,9 +193,9 @@
         local seek_times = s:step(69)()
         clock.sync(sleep_time)
         ii.wtape.loop_start()
-        clock.sync(activator_time)
+        clock.sync(looper_time)
         ii.wtape.loop_end()
-        clock.sync(deactivator_time)
+        clock.sync(activator_time)
         ii.wtape.loop_active(1)
         for i = 1,scale_times do 
           clock.sync(loop_scaler_time)
@@ -228,7 +213,7 @@
             ii.wtape.loop_scale(scale)
           end
         end
-        clock.sync(looper_time)
+        clock.sync(deactivator_time)
         ii.wtape.loop_active(0)
         for i = 1,seek_times do
           clock.sync(seeker_time)
