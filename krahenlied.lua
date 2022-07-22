@@ -197,21 +197,24 @@
         ii.wtape.loop_end()
         clock.sync(activator_time)
         ii.wtape.loop_active(1)
-        for i = 1,scale_times do 
-          clock.sync(loop_scaler_time)
-          ii.wtape.loop_scale(scale)
-          for i = 1,jump_times do
-            clock.sync(loop_jumper_time)
-            ii.wtape.loop_next()
-          end 
-        end
-        for i = 1,jump_times do
-          clock.sync(loop_jumper_time)
-          ii.wtape.loop_next()
-          for i = 1,scale_times do
-            clock.sync(loop_scaler_time)
-            ii.wtape.loop_scale(scale)
-          end
+        if s:step(70)() < 17 then
+            for i = 1,scale_times do 
+                clock.sync(loop_scaler_time)
+                ii.wtape.loop_scale(scale)
+                for i = 1,jump_times do
+                    clock.sync(loop_jumper_time)
+                    ii.wtape.loop_next()
+                end 
+            end
+        elseif s:step(70)() >= 17 then
+            for i = 1,jump_times do
+                clock.sync(loop_jumper_time)
+                ii.wtape.loop_next()
+                for i = 1,scale_times do
+                    clock.sync(loop_scaler_time)
+                    ii.wtape.loop_scale(scale)
+                end
+            end
         end
         clock.sync(deactivator_time)
         ii.wtape.loop_active(0)
