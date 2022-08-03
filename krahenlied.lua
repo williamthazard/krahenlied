@@ -62,192 +62,145 @@
   end
   function notes_event()
     while true do
-        local notes_pitch = s()/12
-        local notes_time = s:step(2)()/s:step(3)()
-        local slew = s:step(4)()/300
-        local notes_slope = { to(5,dyn{attack=1}/20), to(0,dyn{release=1}/20) }
-        clock.sync(notes_time)
-        output[1].volts = notes_pitch
-        output[2].action = notes_slope
-        output[2].dyn.attack = s:step(5)()
-        output[2].dyn.release = s:step(6)()
-        output[1].slew = slew
+        clock.sync(s()/s:step(2)())
+        output[1].volts = s:step(3)()/12
+        output[2].action = { to(5,dyn{attack=1}/20), to(0,dyn{release=1}/20) }
+        output[2].dyn.attack = s:step(4)()
+        output[2].dyn.release = s:step(5)()
+        output[1].slew = s:step(6)()/300
         output[2]()
     end
   end
   function other_event()
     while true do
-        local other_pitch = s:step(7)()/12
-        local other_time = s:step(8)()/s:step(9)()
-        local slew = s:step(10)()/300
-        local other_slope = { to(5,dyn{attack=1}/20), to(0,dyn{release=1}/20) }
-        clock.sync(other_time)
-        output[3].volts = other_pitch
-        output[4].action = other_slope
-        output[4].dyn.attack = s:step(11)()
-        output[4].dyn.release = s:step(12)()
-        output[3].slew = slew
+        clock.sync(s:step(7)()/s:step(8)())
+        output[3].volts = s:step(9)()/12
+        output[4].action = { to(5,dyn{attack=1}/20), to(0,dyn{release=1}/20) }
+        output[4].dyn.attack = s:step(10)()
+        output[4].dyn.release = s:step(11)()
+        output[3].slew = s:step(12)()/300
         output[4]()
     end
   end
   function jfa_event()
     while true do
-        local jfa_pitch = s:step(13)()/12
-        local jfa_time = s:step(14)()/s:step(15)()
-        local level = j:step(16)()
-        clock.sync(jfa_time)
-        ii.jf.play_voice(1, jfa_pitch, level)
+        clock.sync(s:step(13)()/s:step(14)())
+        ii.jf.play_voice(1, s:step(15)()/12, j:step(16)())
     end
   end
   function jfb_event()
     while true do
-        local jfb_pitch = s:step(17)()/12
-        local jfb_time = s:step(18)()/s:step(19)()
-        local level = j:step(20)()
-        clock.sync(jfb_time)
-        ii.jf.play_voice(2, jfb_pitch, level)
+        clock.sync(s:step(17)()/s:step(18)())
+        ii.jf.play_voice(2, s:step(19)()/12, j:step(20)())
     end  
   end
   function jfc_event()
     while true do
-        local jfc_pitch = s:step(21)()/12
-        local jfc_time = s:step(22)()/s:step(23)()
-        local level = j:step(24)()
-        clock.sync(jfc_time)
-        ii.jf.play_voice(3, jfc_pitch, level)
+        clock.sync(s:step(21)()/s:step(22)())
+        ii.jf.play_voice(3, s:step(23)()/12, j:step(24)())
     end
   end
   function jfd_event()
     while true do
-        local jfd_pitch = s:step(25)()/12
-        local jfd_time = s:step(26)()/s:step(27)()
-        local level = j:step(28)()
-        clock.sync(jfd_time)
-        ii.jf.play_voice(4, jfd_pitch, level)
+        clock.sync(s:step(25)()/s:step(26)())
+        ii.jf.play_voice(4, s:step(27)()/12, j:step(28)())
     end
   end
   function jfe_event()
     while true do
-        local jfe_pitch = s:step(29)()/12
-        local jfe_time = s:step(30)()/s:step(31)()
-        local level = j:step(32)()
-        clock.sync(jfe_time)
-        ii.jf.play_voice(5, jfe_pitch, level)
+        clock.sync(s:step(29)()/s:step(30)())
+        ii.jf.play_voice(5, s:step(31)()/12, j:step(32)())
     end
   end
   function jff_event()
     while true do
-        local jff_pitch = s:step(33)()/12
-        local jff_time = s:step(34)()/s:step(35)()
-        local level = j:step(36)()
-        clock.sync(jff_time)
-        ii.jf.play_voice(6, jff_pitch, level)
+        clock.sync(s:step(33)()/s:step(34)())
+        ii.jf.play_voice(6, s:step(35)()/12, j:step(36)())
     end
   end
   function run_event()
     while true do
-        local runvolts = j:step(37)()
-        local runtime = s:step(38)()/s:step(39)()
-        clock.sync(runtime)
-        ii.jf.run(runvolts)
+        clock.sync(s:step(37)()/s:step(38)())
+        ii.jf.run(j:step(39)())
     end
   end
   function quantize_event()
     while true do
-        local quant = s:step(40)()
-        local quantsync = s:step(41)()/s:step(42)()
-        clock.sync(quantsync)
-        ii.jf.quantize(quant)
+        clock.sync(s:step(40)()/s:step(41)())
+        ii.jf.quantize(s:step(42)())
     end
   end
   function with_event()
     while true do
-        local with_time = s:step(43)()/s:step(44)()
-        local speed_num = s:step(45)()
-        local speed_denom = s:step(46)()
-        clock.sync(with_time)
-        ii.wtape.speed(speed_num, speed_denom)
+        clock.sync(s:step(43)()/s:step(44)())
+        ii.wtape.speed(s:step(45)(), s:step(46)())
     end
   end
   function rev_event()
     while true do
-        local rev_time = s:step(47)()/s:step(48)()
-        clock.sync(rev_time)
+        clock.sync(s:step(47)()/s:step(48)())
         ii.wtape.reverse()
     end
   end
   function looper()
     while true do
-        local looper_time = s:step(49)()/s:step(50)()
-        local sleep_time = s:step(51)()/s:step(52)()
-        local reactivator_time = s:step(53)()/s:step(54)()
-        local deactivator_time = s:step(55)()/s:step(56)()
-        local loop_scaler_time = s:step(57)()/s:step(58)()
-        local scale = s:step(59)()/s:step(60)()
-        local scale_times = j:step(61)()
-        local loop_next_time = j:step(62)()-j:step(63)()
-        local loop_jumper_time = s:step(64)()/s:step(65)()
-        local jump_times = j:step(66)()
-        local seeker_time = s:step(67)()/s:step(68)()
-        local seek_time = s:step(69)()*300
-        local alternate_time = s:step(70)()*300
-        local big_time = seek_time-alternate_time
-        local seek_times = s:step(71)()
-        clock.sync(sleep_time)
+        clock.sync(s:step(49)()/s:step(50)())
         ii.wtape.loop_start()
-        clock.sync(looper_time)
+        clock.sync(s:step(51)()/s:step(52)())
         ii.wtape.loop_end()
-        if s:step(72)() < 17 then
-            for i = 1,scale_times do 
-                clock.sync(loop_scaler_time)
-                ii.wtape.loop_scale(scale)
-                for i = 1,jump_times do
-                    clock.sync(loop_jumper_time)
-                    ii.wtape.loop_next(loop_next_time)
-                end 
+        if s:step(53)() < 17 then
+          for i = 1,j:step(54)() do 
+            clock.sync(s:step(55)()/s:step(56)())
+            ii.wtape.loop_scale(s:step(57)()/s:step(58)())
+            for i = 1,j:step(59)() do
+              clock.sync(s:step(60)()/s:step(61)())
+              ii.wtape.loop_next(j:step(62)()-j:step(63)())
+            end 
+          end
+        elseif s:step(53)() >= 17 then
+          for i = 1,j:step(64)() do
+            clock.sync(s:step(65)()/s:step(66)())
+            ii.wtape.loop_next(j:step(67)()-j:step(68)())
+            for i = 1,j:step(69)() do
+              clock.sync(s:step(70)()/s:step(71)())
+              ii.wtape.loop_scale(s:step(72)()/s:step(73)())
             end
-        elseif s:step(72)() >= 17 then
-            for i = 1,jump_times do
-                clock.sync(loop_jumper_time)
-                ii.wtape.loop_next(loop_next_time)
-                for i = 1,scale_times do
-                    clock.sync(loop_scaler_time)
-                    ii.wtape.loop_scale(scale)
-                end
-            end
+          end
         end
-        clock.sync(deactivator_time)
+        clock.sync(s:step(74)()/s:step(75)())
         ii.wtape.loop_active(0)
-        for i = 1,seek_times do
-          clock.sync(seeker_time)
-          ii.wtape.seek(big_time)
+        for i = 1,j:step(76)() do
+          clock.sync(s:step(77)()/s:step(78)())
+          ii.wtape.seek((s:step(79)()*300)-(s:step(80)()*300))
         end
-        clock.sync(reactivator_time)
-        ii.wtape.loop_active(1)
-        if s:step(73)() < 17 then
-          for i = 1,scale_times do 
-              clock.sync(loop_scaler_time)
-              ii.wtape.loop_scale(scale)
-              for i = 1,jump_times do
-                  clock.sync(loop_jumper_time)
-                  ii.wtape.loop_next(loop_next_time)
+        for i = 1,j:step(81)() do
+          clock.sync(s:step(82)()/s:step(83)())
+          ii.wtape.loop_active(1)
+          if s:step(84)() < 17 then
+            for i = 1,j:step(85)() do 
+              clock.sync(s:step(86)()/s:step(87)())
+              ii.wtape.loop_scale(s:step(88)()/s:step(89)())
+              for i = 1,j:step(90)() do
+                clock.sync(s:step(91)()/s:step(92)())
+                ii.wtape.loop_next(j:step(93)()-j:step(94)())
               end 
-          end
-        elseif s:step(73)() >= 17 then
-          for i = 1,jump_times do
-              clock.sync(loop_jumper_time)
-              ii.wtape.loop_next(loop_next_time)
-              for i = 1,scale_times do
-                  clock.sync(loop_scaler_time)
-                  ii.wtape.loop_scale(scale)
+            end
+          elseif s:step(84)() >= 17 then
+            for i = 1,j:step(95)() do
+              clock.sync(s:step(96)()/s:step(97)())
+              ii.wtape.loop_next(s:step(98)()-s:step(99)())
+              for i = 1,j:step(100)() do
+                clock.sync(s:step(101)()/s:step(102)())
+                ii.wtape.loop_scale(s:step(103)()/s:step(104)())
               end
+            end
           end
-        end
-        clock.sync(deactivator_time)
-        ii.wtape.loop_active(0)
-        for i = 1,seek_times do
-          clock.sync(seeker_time)
-          ii.wtape.seek(big_time)
+          clock.sync(s:step(105)()/s:step(106)())
+          ii.wtape.loop_active(0)
+          for i = 1,j:step(107)() do
+            clock.sync(s:step(108)()/s:step(109)())
+            ii.wtape.seek((s:step(110)()*300)-(s:step(111)()*300))
+          end
         end
     end
   end
