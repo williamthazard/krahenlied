@@ -31,7 +31,6 @@
   function title(str)
     text_string = str
     set()
-    ii.wtape.play(1)
     coro_id = clock.run(notes_event)
               clock.run(other_event)
               clock.run(jfa_event)
