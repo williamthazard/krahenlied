@@ -64,7 +64,7 @@
       clock.sync(s()/s:step(2)())
       output[1].volts = s:step(3)()/12
       output[1].slew = s:step(4)()/300
-      output[2].action = {to(5,dyn{attack=1}/20), to(j:step(5)(),dyn{decay=1}/20), to(j:step(5)(),dyn{sustain=1}/20), to(0,dyn{release=1}/20)}
+      output[2].action = {to(5,dyn{attack=1}/20), to(3,dyn{decay=1}/20), to(3,dyn{sustain=1}/20), to(0,dyn{release=1}/20)}
       output[2].dyn.attack = s:step(6)()
       output[2].dyn.decay = s:step(7)()
       output[2].dyn.sustain = s:step(8)()
@@ -77,7 +77,7 @@
       clock.sync(s:step(10)()/s:step(11)())
       output[3].volts = s:step(12)()/12
       output[3].slew = s:step(13)()/300
-      output[4].action = {to(5,dyn{attack=1}/20), to(j:step(14)(),dyn{decay=1}/20), to(j:step(14)(),dyn{sustain=1}/20), to(0,dyn{release=1}/20)}
+      output[4].action = {to(5,dyn{attack=1}/20), to(3,dyn{decay=1}/20), to(3,dyn{sustain=1}/20), to(0,dyn{release=1}/20)}
       output[4].dyn.attack = s:step(15)()
       output[4].dyn.decay = s:step(16)()
       output[4].dyn.sustain = s:step(17)()
