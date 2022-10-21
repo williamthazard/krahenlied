@@ -4,6 +4,7 @@
 --this will start the clocks running and create an initial sequence
 --continue by updating the sequence in druid by typing text followed by a new line of poetry in quotes — e.g.,
 --text "'Tis the middle of night by the castle clock,"
+--note: it's probably best to reset crow after using this script and before using another one or using this one again. Not doing so can lead to crashes
   text_string = "aaaaaa"
   function remap(ascii)
     ascii = ascii % 32 + 1
