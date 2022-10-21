@@ -3,7 +3,7 @@
 --input 1: clock
 --outputs 1 & 3: v/8
 --outputs 2 & 4: ADSR envelopes
---begin by giving your poem a title using the title function (i.e., typing title followed by your title in quotes), like so:
+--begin by giving your poem a title in druid using the title function (i.e., typing title followed by your title in quotes), like so:
 --title "Christabel"
 --this will start the clocks running and create an initial sequence
 --continue by updating the sequence in druid by typing text followed by a new line of poetry in quotes — e.g.,
