@@ -1,4 +1,9 @@
 --- krahenLied.
+--begin by giving your poem a title using the title function (i.e., typing title followed by your title in quotes), like so:
+--title "Christabel"
+--this will start the clocks running and create an initial sequence
+--continue by updating the sequence in druid by typing text followed by a new line of poetry in quotes — e.g.,
+--text "'Tis the middle of night by the castle clock,"
   text_string = "aaaaaa"
   function remap(ascii)
     ascii = ascii % 32 + 1
