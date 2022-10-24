@@ -15,7 +15,7 @@ each new line will determine the following:
 
 1) pitch (v/8) from crow outputs 1 & 3
 2) slew time between pitches from outputs 1 & 3
-3) ADSR envelope shapes from outputs 2 & 4
+3) AR envelope shapes from outputs 2 & 4
 4) sequences for 6 Just Friends synth voices
 5) level for each note event on Just Friends in synthesis mode
 6) repeats and divisions for Just Friends geode rhythms
