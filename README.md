@@ -1,6 +1,9 @@
 # krahenlied
 a poetry sequencer for monome crow &amp; druid
 
+“What is a poet? A poet is an unhappy being whose heart is torn by secret sufferings, but whose lips are so strangely formed that when the sighs and the cries escape them, they sound like beautiful music.”<br>
+-Søren Kierkegaard, Either/Or
+
 begin by giving your poem a title using the title function (i.e., typing ```title``` followed by your title in quotes), like so
 
 ```title "Christabel"```
