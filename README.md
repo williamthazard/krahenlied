@@ -1,4 +1,4 @@
-# krahenlied
+# krähenlied
 a poetry sequencer for monome crow &amp; druid
 
 “What is a poet? A poet is an unhappy being whose heart is torn by secret sufferings, but whose lips are so strangely formed that when the sighs and the cries escape them, they sound like beautiful music.”<br>
